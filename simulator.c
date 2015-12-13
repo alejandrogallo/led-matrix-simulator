@@ -1,8 +1,5 @@
-#include<ncurses.h>
-#include<stdio.h>
-#include<unistd.h>
-
 #include "simulator.h"
+
 int DISPLAY[NROWS]= {0x18,0x3c,0x7e,0xdb,0xff,0x24,0x5a,0xa5};
 
 void set_pixel(int i, int j, int mode){

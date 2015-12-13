@@ -1,6 +1,6 @@
 #include<ncurses.h>
 #include<stdio.h>
-#include<unistd.h>
+#include<stdlib.h>
 
 
 #ifndef __LED_MATRIX_SIMULATOR
