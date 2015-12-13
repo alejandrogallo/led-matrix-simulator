@@ -64,6 +64,6 @@ void slide_left(int *frame_left, int *frame_right){
 			DISPLAY[i] = (frame_left[i]<<j)|(frame_right[i]>>(8-j));
 		}
 		refresh_matrix();
-		_delay_ms(200);
+		delay(200);
 	}
 }
