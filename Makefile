@@ -3,4 +3,7 @@ run:
 	./main
 
 compile:
-	gcc main.c -o main -lncurses
+	gcc -W test.c simulator.c -o test -lncurses -I.
+
+clean:
+	rm *.o
