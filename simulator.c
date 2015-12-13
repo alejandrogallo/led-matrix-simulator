@@ -48,13 +48,15 @@ void refresh_matrix (){
 	refresh();
 }
 
-void _delay_ms(int ms){
-	int i, j, multiplicator;
-	multiplicator = 20;
-	for (i=0; i< ms*multiplicator; i++){
-		for(j=0; j<ms*multiplicator; j++){
-		}
-	}
+void _delay_ms(int milliseconds)
+{
+	    long pause;
+	        clock_t now,then;
+
+		    pause = milliseconds*(CLOCKS_PER_SEC/1000);
+		        now = then = clock();
+			    while( (now-then) < pause )
+				            now = clock();
 }
 
 void slide_left(int *frame_left, int *frame_right){
@@ -64,6 +66,6 @@ void slide_left(int *frame_left, int *frame_right){
 			DISPLAY[i] = (frame_left[i]<<j)|(frame_right[i]>>(8-j));
 		}
 		refresh_matrix();
-		delay(200);
+		_delay_ms(100);
 	}
 }
