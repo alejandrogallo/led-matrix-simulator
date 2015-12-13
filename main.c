@@ -2,6 +2,8 @@
 #include<stdio.h>
 #include<unistd.h>
 
+#include "alphabet.h"
+
 #define NCOLS 8
 #define NROWS 8
 #define WIDTH 2
@@ -9,64 +11,61 @@
 #define ON 1
 #define OFF 2
 
-int DISPLAY[NROWS][NCOLS]= {
-	{0,1,0,1,0,1,0,1},
-	{1,0,1,0,1,0,1,0},
-	{0,1,0,1,0,1,0,1},
-	{1,0,1,0,1,0,1,0},
-	{0,1,0,1,0,1,0,1},
-	{1,0,1,0,1,0,1,0},
-	{0,1,0,1,0,1,0,1},
-	{1,0,1,0,1,0,1,0}
-};
+int DISPLAY[NROWS]= {0x18,0x3c,0x7e,0xdb,0xff,0x24,0x5a,0xa5};
 void set_pixel(int i, int j, int mode){
 	int l,k;
 	attron(COLOR_PAIR(mode));
 	for (l=0; l<WIDTH; l++){
 		for (k=0; k<HEIGHT; k++){
 			move(j*WIDTH+l,i*HEIGHT+k);
-			printw(" ");
+			printw(".");
 		}
 	}
 	attroff(COLOR_PAIR(mode));
 
 }
+
+void set_image(int frame[NROWS]){
+	int i; 
+	for (i=0; i<NROWS; i++){
+		DISPLAY[i] = frame[i];
+	}
+}
+
 void init_matrix(){
+	initscr();                      /* Start curses mode              */
 	start_color();
 	init_pair(ON, COLOR_GREEN, COLOR_RED);
 	init_pair(OFF, COLOR_GREEN, COLOR_BLACK);
 }
+void end_matrix(){
+	getch();                        /* Wait for user input */
+	endwin();                       /* End curses mode                */
+}
 
 void refresh_matrix (){
 	int i,j;
-	int l,k;
-	int ctl = 1;
+	int ctl;
 	for (i=0; i<NROWS; i++){
 		for (j=0; j<NCOLS; j++){
-			if (DISPLAY[j][i]) ctl = 1; 
-			else ctl =2;
-			set_pixel(i,j,ctl);
+			if (DISPLAY[i]&(1<<(NCOLS-1-j))) ctl = ON; 
+			else ctl =OFF;
+			set_pixel(j,i,ctl);
 		}
 		
 	}
+	// REFRESH NCURSES
+	refresh();
 }
 
 int main(){
-	initscr();                      /* Start curses mode              */
 	init_matrix();
-	refresh_matrix();
-	refresh();                      /* Print it on to the real screen */
 	int i; 
-	for (i =0 ; i <10; i++){
-		set_pixel(0,0,ON);
-		refresh();
-		sleep(1);
-		set_pixel(0,0,OFF);
-		refresh();
+	for (i=0; i<sizeof(ALL)/sizeof(ALL[0]); i++){
+		set_image(ALL[i]);
+		refresh_matrix();
 		sleep(1);
 	}
-	getch();                        /* Wait for user input */
-	endwin();                       /* End curses mode                */
-
+	end_matrix();
 	return 0;
 }
