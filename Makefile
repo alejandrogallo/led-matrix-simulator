@@ -1,6 +1,6 @@
 all: compile run
 run:
-	./main
+	./test
 
 compile:
 	gcc -W test.c simulator.c -o test -lncurses -I.

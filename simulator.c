@@ -50,3 +50,23 @@ void refresh_matrix (){
 	// REFRESH NCURSES
 	refresh();
 }
+
+void _delay_ms(int ms){
+	int i, j, multiplicator;
+	multiplicator = 20;
+	for (i=0; i< ms*multiplicator; i++){
+		for(j=0; j<ms*multiplicator; j++){
+		}
+	}
+}
+
+void slide_left(int *frame_left, int *frame_right){
+	int i, j;
+	for (j=0; j<8; j++){
+		for (i=0; i<=7; i++){
+			DISPLAY[i] = (frame_left[i]<<j)|(frame_right[i]>>(8-j));
+		}
+		refresh_matrix();
+		_delay_ms(200);
+	}
+}
