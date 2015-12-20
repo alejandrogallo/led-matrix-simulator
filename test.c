@@ -9,7 +9,6 @@ int main(){
 	for (i=0; i<limit; i++){
 		set_image(ALL[i]);
 		refresh_matrix();
-		sleep(1);
 		if (i<limit-1) slide(ALL[i],ALL[i+1], LEFT);
 	}
 	end_matrix();
