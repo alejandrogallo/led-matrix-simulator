@@ -13,6 +13,14 @@
 #define ON 1
 #define OFF 2
 
+#define LEFT 0
+#define RIGHT 1
+#define TOP 2
+#define BOTTOM 3
+#define RIGHT_LEFT 4
+#define LEFT_RIGHT 5
+
+
 void set_pixel(int i, int j, int mode);
 
 void set_image(int frame[NROWS]);
@@ -22,7 +30,7 @@ void end_matrix();
 
 void refresh_matrix ();
 
-void slide_left(int *frame_left, int *frame_right);
+void slide(int *frame_left, int *frame_right, int DIRECTION);
 
 
 // This is an implementation of the delay function. For every computer and processor it 

@@ -1,7 +1,3 @@
-#include<ncurses.h>
-#include<stdio.h>
-#include<unistd.h>
-
 #include "alphabet.h"
 #include "simulator.h"
 
@@ -14,7 +10,7 @@ int main(){
 		set_image(ALL[i]);
 		refresh_matrix();
 		sleep(1);
-		if (i<limit-1) slide_left(ALL[i],ALL[i+1]);
+		if (i<limit-1) slide(ALL[i],ALL[i+1], LEFT);
 	}
 	end_matrix();
 	return 0;

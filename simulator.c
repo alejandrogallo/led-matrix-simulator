@@ -8,7 +8,7 @@ void set_pixel(int i, int j, int mode){
 	for (l=0; l<WIDTH; l++){
 		for (k=0; k<HEIGHT; k++){
 			move(j*WIDTH+l,i*HEIGHT+k);
-			printw(".");
+			printw(" ");
 		}
 	}
 	attroff(COLOR_PAIR(mode));
@@ -59,11 +59,24 @@ void _delay_ms(int ms)
 		now = clock();
 }
 
-void slide_left(int *frame_left, int *frame_right){
-	int i, j;
-	for (j=0; j<8; j++){
-		for (i=0; i<=7; i++){
-			DISPLAY[i] = (frame_left[i]<<j)|(frame_right[i]>>(8-j));
+void slide(int *frame_left, int *frame_right, int DIRECTION){
+	int i, j, k;
+	for (i=0; i<NROWS; i++){
+		for (j=0; j<NCOLS; j++){
+			switch (DIRECTION){
+				case LEFT:
+					DISPLAY[i] = (frame_left[i]<<j)|(frame_right[i]>>(NCOLS-j));
+					break;
+				case RIGHT:
+					DISPLAY[i] = (frame_left[i]>>j)|(frame_right[i]<<(NCOLS-j));
+					break;
+				case BOTTOM:
+					break;
+					//for (k=0; k<j
+				case RIGHT_LEFT:
+					DISPLAY[i] = (frame_left[i]>>j)|(frame_right[i]>>(NCOLS-j));
+					break;
+			}
 		}
 		refresh_matrix();
 		_delay_ms(100);
