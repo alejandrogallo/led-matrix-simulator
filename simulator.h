@@ -1,7 +1,3 @@
-#include<ncurses.h>
-#include<stdio.h>
-#include<time.h>
-
 #ifndef __LED_MATRIX_SIMULATOR
 #define __LED_MATRIX_SIMULATOR
 
@@ -25,6 +21,7 @@ void set_pixel(int i, int j, int mode);
 void set_image(int *frame);
 
 void init_matrix();
+
 void end_matrix();
 
 void refresh_matrix ();
